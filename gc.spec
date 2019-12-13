@@ -1,8 +1,8 @@
 Name:    gc
-Version: 7.6.12
-Release: 2
+Version: 8.0.4
+Release: 1
 Summary: A garbage collector for C and C++
-License: GPLv1+
+License: BSD and GPLv1+
 Url:     http://www.hboehm.info/gc/
 Source0: http://www.hboehm.info/gc/gc_source/gc-%{version}.tar.gz
 
@@ -17,7 +17,6 @@ Summary: Libraries and header files for %{name} development
 Requires: %{name}%{?_isa} = %{version}-%{release}
 %description devel
 %{summary}.
-
 
 %prep
 %autosetup -n %{name}-%{version} -p1
@@ -62,7 +61,6 @@ make check
 
 %files devel
 %doc doc/README.environment doc/README.linux
-%doc doc/*.html
 %{_includedir}/gc.h
 %{_includedir}/gc_cpp.h
 %{_includedir}/gc/
@@ -74,6 +72,12 @@ make check
 
 
 %changelog
+* Tue Nov 5 2019 shenyangyang<shenyangyang4@huawei.com> - 8.0.4-1
+- Type:bugfix
+- ID:NA
+- SUG:NA
+- DESC:update gc to 8.0.4 to solve build problem of guile
+
 * Wed Sep 25 2019 openEuler Buildteam <buildteam@openeuler.org> - 7.6.12-2
 - Modify license
 
