@@ -1,12 +1,12 @@
 Name:    gc
 Version: 8.0.4
-Release: 1
+Release: 2
 Summary: A garbage collector for C and C++
 License: BSD and GPLv1+
 Url:     http://www.hboehm.info/gc/
 Source0: http://www.hboehm.info/gc/gc_source/gc-%{version}.tar.gz
 
-BuildRequires: gcc libtool libatomic_ops-devel
+BuildRequires: gcc libtool libatomic_ops-devel gdb
 
 %description
 The Boehm-Demers-Weiser conservative garbage collector can be
@@ -72,6 +72,12 @@ make check
 
 
 %changelog
+* Sat Mar 14 2020 shenyangyang<shenyangyang4@huawei.com> - 8.0.4-2
+- Type:bugfix
+- ID:NA
+- SUG:NA
+- DESC:add build requires of gdb
+
 * Tue Nov 5 2019 shenyangyang<shenyangyang4@huawei.com> - 8.0.4-1
 - Type:bugfix
 - ID:NA
