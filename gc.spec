@@ -1,6 +1,6 @@
 Name:    gc
-Version: 8.0.4
-Release: 4
+Version: 8.0.6
+Release: 1
 Summary: A garbage collector for C and C++
 License: BSD and GPLv1+
 Url:     http://www.hboehm.info/gc/
@@ -72,6 +72,12 @@ make check
 
 
 %changelog
+* Thu Dec 2 2021 wangjie <wangjie375@huawei.com> - 8.0.6-1
+- Type:enhancement
+- ID:NA
+- SUG:NA
+- DESC:Update gc to 8.0.6
+
 * Thu Jul 22 2021 wangchen<wangchen137@huawei.com> - 8.0.4-4
 - Deleta unnecessary gdb from BuildRequires
 
