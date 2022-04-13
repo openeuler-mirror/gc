@@ -1,0 +1,96 @@
+From 6ade473e440b2da11e6ecf6a69c4f1b309ab7624 Mon Sep 17 00:00:00 2001
+From: wang--ge <wang__ge@126.com>
+Date: Tue, 12 Apr 2022 19:47:14 +0800
+Subject: [PATCH] add loongarch architecture
+
+---
+ configure.ac               |  2 +-
+ include/private/gcconfig.h | 31 +++++++++++++++++++++++++++++++
+ os_dep.c                   |  2 +-
+ 3 files changed, 33 insertions(+), 2 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 3b38e6f..1588dd1 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -201,7 +201,7 @@ case "$THREADS" in
+       *-*-aix* | *-*-android* | *-*-cygwin* | *-*-darwin* | *-*-dragonfly* | \
+       *-*-freebsd* | *-*-haiku* | *-*-hpux11* | *-*-irix* | \
+       *-*-kfreebsd*-gnu | *-*-gnu* | *-*-*linux* | *-*-msys* | *-*-nacl* | \
+-      *-*-netbsd* | *-*-openbsd* | *-*-osf* | *-*-solaris*)
++      *-*-netbsd* | *-*-openbsd* | *-*-osf* | *-*-solaris* | loongarch*) 
+         AC_DEFINE(GC_THREADS)
+         AC_DEFINE([_REENTRANT], [1],
+                   [Required define if using POSIX threads.])
+diff --git a/include/private/gcconfig.h b/include/private/gcconfig.h
+index 1979c58..ef8c279 100644
+--- a/include/private/gcconfig.h
++++ b/include/private/gcconfig.h
+@@ -238,6 +238,14 @@ EXTERN_C_BEGIN
+ #    define VAX
+ #    define mach_type_known
+ # endif
++# if defined(__loongarch64) 
++#    define LOONGARCH64
++#    define mach_type_known
++# endif
++# if defined(__loongarch64) 
++#    define LOONGARCH64
++#    define mach_type_known
++# endif
+ # if defined(mips) || defined(__mips) || defined(_mips)
+ #    define MIPS
+ #    if defined(nec_ews) || defined(_nec_ews)
+@@ -514,6 +522,10 @@ EXTERN_C_BEGIN
+ #   define AARCH64
+ #   define mach_type_known
+ # endif
++# if defined(FREEBSD) && (defined(__loongarch64) )
++#   define LOONGARCH64
++#   define mach_type_known
++# endif
+ # if defined(FREEBSD) && (defined(mips) || defined(__mips) || defined(_mips))
+ #   define MIPS
+ #   define mach_type_known
+@@ -1732,6 +1744,25 @@ EXTERN_C_BEGIN
+ #   define STACKBOTTOM ((ptr_t)0xfffff000) /* for Encore */
+ # endif
+ 
++# ifdef LOONGARCH64
++#   define MACH_TYPE "LOONGARCH64"
++#   ifdef LINUX
++#     define OS_TYPE "LINUX"
++#     define DYNAMIC_LOADING
++      extern int _end[];
++#     pragma weak __data_start
++      extern int __data_start[];
++#     define DATASTART ((ptr_t)(__data_start))
++#     define DATAEND ((ptr_t)(_end))
++#     define CPP_WORDSZ 64
++#     define ALIGNMENT (64/8)
++#     ifndef HBLKSIZE
++#       define HBLKSIZE 4096
++#     endif
++#     define LINUX_STACKBOTTOM
++#   endif
++# endif
++
+ # ifdef MIPS
+ #   define MACH_TYPE "MIPS"
+ #   ifdef LINUX
+diff --git a/os_dep.c b/os_dep.c
+index b183423..e18c9b9 100644
+--- a/os_dep.c
++++ b/os_dep.c
+@@ -3144,7 +3144,7 @@ GC_API GC_push_other_roots_proc GC_CALL GC_get_push_other_roots(void)
+ #     ifndef SEGV_ACCERR
+ #       define SEGV_ACCERR 2
+ #     endif
+-#     if defined(AARCH64) || defined(ARM32) || defined(MIPS) \
++#     if defined(AARCH64) || defined(ARM32) || defined(MIPS) || defined(LOONGARCH64) \
+          || __FreeBSD__ >= 7
+ #       define CODE_OK (si -> si_code == SEGV_ACCERR)
+ #     elif defined(POWERPC)
+-- 
+2.27.0
+
