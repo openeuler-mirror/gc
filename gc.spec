@@ -1,10 +1,11 @@
 Name:    gc
 Version: 8.0.6
-Release: 1
+Release: 2
 Summary: A garbage collector for C and C++
 License: BSD and GPLv1+
 Url:     http://www.hboehm.info/gc/
 Source0: http://www.hboehm.info/gc/gc_source/gc-%{version}.tar.gz
+Patch0:  0001-add-loongarch-architecture.patch
 
 BuildRequires: gcc gcc-c++ libtool libatomic_ops-devel
 
@@ -72,6 +73,9 @@ make check
 
 
 %changelog
+* Wed Apr 13 2022 Ge Wang <wangge20@h-partner.com> - 8.0.6-2
+- Add LoongArch architecture support
+
 * Thu Dec 2 2021 wangjie <wangjie375@huawei.com> - 8.0.6-1
 - Type:enhancement
 - ID:NA
